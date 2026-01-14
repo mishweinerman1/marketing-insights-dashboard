@@ -3,7 +3,7 @@ Branded header component with gradient background.
 Displays client name, logo, and dashboard title.
 """
 
-from dash import html
+from dash import html, dcc
 import dash_bootstrap_components as dbc
 from datetime import datetime
 
@@ -145,7 +145,7 @@ def create_navigation_tabs(active_tab='executive'):
         }
 
         tab_elements.append(
-            html.A([
+            dcc.Link([
                 html.I(className=f'fas {tab["icon"]}', style={'marginRight': '8px'}),
                 html.Span(tab['label'])
             ], href=f'/{tab["id"]}', style=tab_style, id=f'tab-{tab["id"]}')
