@@ -19,55 +19,67 @@ def create_insight_card(title, insights, icon='fa-lightbulb', color='#667eea'):
         html.Div - Insight card
     """
     return html.Div([
-        # Header
+        # Header with gradient background
         html.Div([
             html.I(className=f'fas {icon}', style={
-                'marginRight': '12px',
-                'fontSize': '20px',
-                'color': color
+                'marginRight': '14px',
+                'fontSize': '26px',
+                'color': '#ffffff'
             }),
             html.Span(title, style={
-                'fontSize': '18px',
-                'fontWeight': '700',
-                'color': '#2c3e50'
+                'fontSize': '22px',
+                'fontWeight': '800',
+                'color': '#ffffff',
+                'letterSpacing': '0.5px'
             })
         ], style={
             'display': 'flex',
             'alignItems': 'center',
-            'marginBottom': '16px',
-            'paddingBottom': '12px',
-            'borderBottom': f'2px solid {color}'
+            'marginBottom': '0px',
+            'padding': '20px 24px',
+            'background': f'linear-gradient(135deg, {color} 0%, {color}dd 100%)',
+            'borderRadius': '12px 12px 0 0',
+            'marginTop': '-24px',
+            'marginLeft': '-24px',
+            'marginRight': '-24px'
         }),
 
-        # Insights list
+        # Insights list with more prominence
         html.Div([
             html.Div([
-                html.I(className='fas fa-check-circle', style={
+                html.I(className='fas fa-arrow-right', style={
                     'color': color,
-                    'marginRight': '10px',
-                    'fontSize': '14px',
-                    'marginTop': '2px'
+                    'marginRight': '14px',
+                    'fontSize': '16px',
+                    'marginTop': '4px',
+                    'fontWeight': 'bold'
                 }),
                 html.Span(insight, style={
-                    'color': '#34495e',
-                    'fontSize': '14px',
-                    'lineHeight': '1.6',
-                    'flex': '1'
+                    'color': '#2c3e50',
+                    'fontSize': '15px',
+                    'lineHeight': '1.7',
+                    'flex': '1',
+                    'fontWeight': '500'
                 })
             ], style={
                 'display': 'flex',
-                'marginBottom': '12px',
-                'alignItems': 'flex-start'
+                'marginBottom': '16px',
+                'alignItems': 'flex-start',
+                'padding': '12px',
+                'background': '#f8f9fa',
+                'borderRadius': '8px',
+                'borderLeft': f'4px solid {color}'
             })
             for insight in insights
-        ])
+        ], style={'marginTop': '24px'})
     ], style={
         'background': '#ffffff',
         'padding': '24px',
         'borderRadius': '12px',
-        'boxShadow': '0 2px 8px rgba(0,0,0,0.08)',
-        'border': f'1px solid {color}20',
-        'height': '100%'
+        'boxShadow': '0 4px 16px rgba(0,0,0,0.12)',
+        'border': f'2px solid {color}',
+        'height': '100%',
+        'transition': 'transform 0.2s ease, box-shadow 0.2s ease'
     })
 
 
@@ -96,55 +108,77 @@ def create_metric_card(label, value, change=None, icon='fa-chart-line', good_dir
     change_icon = 'fa-arrow-up' if is_positive else 'fa-arrow-down' if is_positive is False else 'fa-minus'
 
     return html.Div([
-        # Icon
+        # Icon with gradient background
         html.Div([
             html.I(className=f'fas {icon}', style={
-                'fontSize': '24px',
-                'color': '#667eea'
+                'fontSize': '32px',
+                'color': '#ffffff'
             })
         ], style={
-            'marginBottom': '12px'
+            'marginBottom': '16px',
+            'padding': '20px',
+            'background': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'borderRadius': '50%',
+            'width': '70px',
+            'height': '70px',
+            'display': 'flex',
+            'alignItems': 'center',
+            'justifyContent': 'center',
+            'margin': '0 auto',
+            'boxShadow': '0 4px 12px rgba(102, 126, 234, 0.3)'
         }),
 
         # Value
         html.Div(value, style={
-            'fontSize': '32px',
-            'fontWeight': '700',
+            'fontSize': '42px',
+            'fontWeight': '800',
             'color': '#2c3e50',
-            'marginBottom': '8px',
-            'lineHeight': '1'
+            'marginBottom': '10px',
+            'lineHeight': '1',
+            'letterSpacing': '-1px'
         }),
 
         # Label
         html.Div(label, style={
-            'fontSize': '14px',
+            'fontSize': '15px',
             'color': '#7f8c8d',
-            'marginBottom': '8px'
+            'marginBottom': '12px',
+            'fontWeight': '600',
+            'textTransform': 'uppercase',
+            'letterSpacing': '1px'
         }),
 
-        # Change indicator
+        # Change indicator with background
         html.Div([
             html.I(className=f'fas {change_icon}', style={
-                'marginRight': '6px',
-                'fontSize': '12px'
+                'marginRight': '8px',
+                'fontSize': '14px'
             }),
             html.Span(change, style={
-                'fontSize': '14px',
-                'fontWeight': '600'
+                'fontSize': '16px',
+                'fontWeight': '700'
             })
         ], style={
             'color': change_color,
             'display': 'flex',
-            'alignItems': 'center'
+            'alignItems': 'center',
+            'justifyContent': 'center',
+            'padding': '8px 16px',
+            'background': f'{change_color}15',
+            'borderRadius': '20px',
+            'display': 'inline-flex',
+            'margin': '0 auto'
         }) if change else None
     ], style={
         'background': '#ffffff',
-        'padding': '24px',
-        'borderRadius': '12px',
-        'boxShadow': '0 2px 8px rgba(0,0,0,0.08)',
-        'border': '1px solid #e0e0e0',
+        'padding': '30px 24px',
+        'borderRadius': '16px',
+        'boxShadow': '0 4px 16px rgba(0,0,0,0.1)',
+        'border': '2px solid #e8e8e8',
         'textAlign': 'center',
-        'height': '100%'
+        'height': '100%',
+        'transition': 'transform 0.2s ease, box-shadow 0.2s ease',
+        'cursor': 'pointer'
     })
 
 
@@ -178,24 +212,29 @@ def create_keyword_insight_card(keywords_df):
     avg_position = keywords_df['Position'].mean() if 'Position' in keywords_df.columns else None
 
     return html.Div([
-        # Header
+        # Header with gradient
         html.Div([
             html.I(className='fas fa-key', style={
-                'marginRight': '12px',
-                'fontSize': '20px',
-                'color': '#f39c12'
+                'marginRight': '14px',
+                'fontSize': '26px',
+                'color': '#ffffff'
             }),
             html.Span('Keyword Insights', style={
-                'fontSize': '18px',
-                'fontWeight': '700',
-                'color': '#2c3e50'
+                'fontSize': '22px',
+                'fontWeight': '800',
+                'color': '#ffffff',
+                'letterSpacing': '0.5px'
             })
         ], style={
             'display': 'flex',
             'alignItems': 'center',
-            'marginBottom': '16px',
-            'paddingBottom': '12px',
-            'borderBottom': '2px solid #f39c12'
+            'marginBottom': '0px',
+            'padding': '20px 24px',
+            'background': 'linear-gradient(135deg, #f39c12 0%, #e67e22 100%)',
+            'borderRadius': '12px 12px 0 0',
+            'marginTop': '-24px',
+            'marginLeft': '-24px',
+            'marginRight': '-24px'
         }),
 
         # Stats row

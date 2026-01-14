@@ -88,9 +88,18 @@ def create_paid_search_page(data):
     from components.insight_cards import create_insight_card, create_metric_card, create_keyword_insight_card
     import pandas as pd
 
-    # Get data
-    ppc_data = pd.DataFrame(data.get('ppc_spend', [])) if data and data.get('ppc_spend') else None
-    keywords_data = pd.DataFrame(data.get('keywords_paid', [])) if data and data.get('keywords_paid') else None
+    # Get data - handle both dict and DataFrame cases
+    ppc_data = None
+    keywords_data = None
+
+    if data is not None:
+        if isinstance(data, dict):
+            ppc_data = data.get('ppc_spend')
+            keywords_data = data.get('keywords_paid')
+            if isinstance(ppc_data, list):
+                ppc_data = pd.DataFrame(ppc_data) if ppc_data else None
+            if isinstance(keywords_data, list):
+                keywords_data = pd.DataFrame(keywords_data) if keywords_data else None
 
     # Calculate metrics
     total_spend = "$245K" if ppc_data is not None and not ppc_data.empty else "N/A"
@@ -194,9 +203,18 @@ def create_seo_page(data):
     from components.insight_cards import create_insight_card, create_metric_card, create_keyword_insight_card
     import pandas as pd
 
-    # Get data
-    keywords_data = pd.DataFrame(data.get('keywords_organic', [])) if data and data.get('keywords_organic') else None
-    backlinks_data = pd.DataFrame(data.get('backlinks', [])) if data and data.get('backlinks') else None
+    # Get data - handle both dict and DataFrame cases
+    keywords_data = None
+    backlinks_data = None
+
+    if data is not None:
+        if isinstance(data, dict):
+            keywords_data = data.get('keywords_organic')
+            backlinks_data = data.get('backlinks')
+            if isinstance(keywords_data, list):
+                keywords_data = pd.DataFrame(keywords_data) if keywords_data else None
+            if isinstance(backlinks_data, list):
+                backlinks_data = pd.DataFrame(backlinks_data) if backlinks_data else None
 
     # Calculate metrics
     total_keywords = f"{len(keywords_data):,}" if keywords_data is not None and not keywords_data.empty else "N/A"
