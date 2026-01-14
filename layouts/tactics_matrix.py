@@ -111,6 +111,9 @@ def create_layout(tactics_data=None):
             ], style={'display': 'flex', 'gap': '20px', 'flexWrap': 'wrap'})
         ], style={'padding': '0 40px', 'marginBottom': '40px'}),
 
+        # AI Recommendations Panel
+        html.Div(id='recommendations-panel', style={'padding': '0 40px'}),
+
         # Tactics table
         html.Div([
             html.H2("All Marketing Tactics", style={
