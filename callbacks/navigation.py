@@ -170,14 +170,16 @@ def create_paid_search_page(data):
                     icon='fa-lightbulb',
                     color='#f39c12'
                 )
-            ], style={'flex': '1', 'marginRight': '20px'}),
+            ], style={'flex': '1', 'minWidth': '0', 'marginRight': '20px'}),
 
             # Keywords column
             html.Div([
                 create_keyword_insight_card(keywords_data) if keywords_data is not None else html.Div("No keyword data")
-            ], style={'flex': '1'})
+            ], style={'flex': '1', 'minWidth': '0'})
         ], style={
             'display': 'flex',
+            'flexWrap': 'wrap',
+            'gap': '20px',
             'padding': '0 40px',
             'marginBottom': '30px'
         }),
@@ -292,7 +294,7 @@ def create_seo_page(data):
                     icon='fa-lightbulb',
                     color='#f39c12'
                 )
-            ], style={'flex': '1', 'marginRight': '20px'}),
+            ], style={'flex': '1', 'minWidth': '0', 'marginRight': '20px'}),
 
             # Keywords column
             html.Div([
@@ -391,9 +393,11 @@ def create_seo_page(data):
                     'boxShadow': '0 2px 8px rgba(0,0,0,0.08)',
                     'border': '1px solid #9b59b620'
                 })
-            ], style={'flex': '1'})
+            ], style={'flex': '1', 'minWidth': '0'})
         ], style={
             'display': 'flex',
+            'flexWrap': 'wrap',
+            'gap': '20px',
             'padding': '0 40px',
             'marginBottom': '30px'
         }),
