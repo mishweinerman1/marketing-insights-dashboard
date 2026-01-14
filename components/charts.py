@@ -127,6 +127,7 @@ def create_traffic_scale_scatter(df, company_focus='dossier'):
         },
         xaxis_title="Monthly Visits",
         yaxis_title="YoY Growth (%)",
+        width=900,
         height=550,
         template='plotly_white',
         hovermode='closest',
@@ -361,6 +362,7 @@ def create_engagement_scatter(df):
         },
         xaxis_title="Bounce Rate (%)",
         yaxis_title="Visit Duration (minutes)",
+        width=900,
         height=550,
         template='plotly_white',
         hovermode='closest',
@@ -498,14 +500,14 @@ def create_ppc_spend_trend(df):
     fig = go.Figure()
 
     try:
-        # Create stacked area chart
+        # Create smooth stacked area chart with spline
         if 'Mobile Spend' in df.columns:
             fig.add_trace(go.Scatter(
                 x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
                 y=df['Mobile Spend'],
                 name='Mobile',
                 mode='lines',
-                line=dict(color='#667eea', width=0),
+                line=dict(color='#667eea', width=2, shape='spline', smoothing=1.3),
                 fillcolor='rgba(102, 126, 234, 0.5)',
                 fill='tozeroy',
                 stackgroup='one',
@@ -518,7 +520,7 @@ def create_ppc_spend_trend(df):
                 y=df['Desktop Spend'],
                 name='Desktop',
                 mode='lines',
-                line=dict(color='#f39c12', width=0),
+                line=dict(color='#f39c12', width=2, shape='spline', smoothing=1.3),
                 fillcolor='rgba(243, 156, 18, 0.5)',
                 fill='tonexty',
                 stackgroup='one',
@@ -534,6 +536,7 @@ def create_ppc_spend_trend(df):
         },
         xaxis_title="Month",
         yaxis_title="Spend ($)",
+        width=1000,
         height=450,
         template='plotly_white',
         hovermode='x unified',
