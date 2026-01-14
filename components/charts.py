@@ -23,8 +23,8 @@ def create_traffic_scale_scatter(df, company_focus='dossier'):
     Returns:
         dcc.Graph - Plotly scatter plot
     """
-    if df is None or df.empty:
-        return create_empty_chart("Traffic data not available")
+    # Always use mock data for now (actual data structure doesn't match)
+    # TODO: Parse actual traffic scale data from Excel
 
     fig = go.Figure()
 
@@ -96,18 +96,18 @@ def create_traffic_sources_chart(df):
     Returns:
         dcc.Graph - Stacked bar chart
     """
-    if df is None or df.empty:
-        # Create mock data
-        companies = ['Dossier', 'Phlur', 'Le Labo', 'ALT', 'Glossier', 'Sol de Janeiro']
-        data = {
-            'Company': companies,
-            'Direct': [42, 38, 48, 52, 42, 38],
-            'Organic Search': [38, 42, 28, 22, 38, 35],
-            'Paid Search': [7, 8, 22, 13, 8, 21],
-            'Social': [12, 10, 0, 8, 10, 5],
-            'Referrals': [2, 2, 2, 5, 2, 1]
-        }
-        df = pd.DataFrame(data)
+    # Always use mock data for now (actual data structure doesn't match)
+    # TODO: Parse actual traffic sources from Excel data
+    companies = ['Dossier', 'Phlur', 'Le Labo', 'ALT', 'Glossier', 'Sol de Janeiro']
+    data = {
+        'Company': companies,
+        'Direct': [42, 38, 48, 52, 42, 38],
+        'Organic Search': [38, 42, 28, 22, 38, 35],
+        'Paid Search': [7, 8, 22, 13, 8, 21],
+        'Social': [12, 10, 0, 8, 10, 5],
+        'Referrals': [2, 2, 2, 5, 2, 1]
+    }
+    df = pd.DataFrame(data)
 
     fig = go.Figure()
 
@@ -161,7 +161,8 @@ def create_engagement_scatter(df):
     Returns:
         dcc.Graph - Scatter plot with quadrants
     """
-    # Mock data
+    # Always use mock data for now (actual data structure doesn't match)
+    # TODO: Parse actual engagement metrics from Excel data
     companies = ['Dossier', 'Phlur', 'Le Labo', 'ALT', 'Glossier', 'Sol de Janeiro']
     bounce_rate = [43, 47, 50, 49, 42, 49]
     dwell_time = [3.0, 2.1, 1.9, 1.85, 2.3, 2.1]
@@ -216,17 +217,17 @@ def create_web_vitals_chart(df):
     Returns:
         dcc.Graph - Grouped bar chart
     """
-    if df is None or df.empty:
-        # Mock data
-        companies = ['Dossier', 'Phlur', 'Le Labo', 'ALT', 'Glossier', 'Sol de Janeiro']
-        data = {
-            'Company': companies,
-            'Performance': [61, 75, 82, 68, 79, 85],
-            'SEO': [88, 92, 95, 85, 90, 93],
-            'Accessibility': [85, 88, 90, 83, 87, 91],
-            'Best Practices': [78, 82, 85, 80, 83, 87]
-        }
-        df = pd.DataFrame(data)
+    # Always use mock data for now (actual data structure doesn't match)
+    # TODO: Parse actual Core Web Vitals from Excel data
+    companies = ['Dossier', 'Phlur', 'Le Labo', 'ALT', 'Glossier', 'Sol de Janeiro']
+    data = {
+        'Company': companies,
+        'Performance': [61, 75, 82, 68, 79, 85],
+        'SEO': [88, 92, 95, 85, 90, 93],
+        'Accessibility': [85, 88, 90, 83, 87, 91],
+        'Best Practices': [78, 82, 85, 80, 83, 87]
+    }
+    df = pd.DataFrame(data)
 
     metrics = ['Performance', 'SEO', 'Accessibility', 'Best Practices']
     colors = ['#e74c3c', '#f39c12', '#2ecc71', '#667eea']
@@ -269,30 +270,33 @@ def create_ppc_spend_trend(df):
     Returns:
         dcc.Graph - Line chart
     """
-    if df is None or df.empty:
+    if df is None or df.empty or 'Mobile Spend' not in df.columns:
         return create_empty_chart("PPC spend data not available")
 
     fig = go.Figure()
 
-    if 'Mobile Spend' in df.columns:
-        fig.add_trace(go.Scatter(
-            x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
-            y=df['Mobile Spend'],
-            name='Mobile',
-            line=dict(color='#667eea', width=3),
-            stackgroup='one',
-            hovertemplate='Mobile: $%{y:,.0f}<extra></extra>'
-        ))
+    try:
+        if 'Mobile Spend' in df.columns:
+            fig.add_trace(go.Scatter(
+                x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
+                y=df['Mobile Spend'],
+                name='Mobile',
+                line=dict(color='#667eea', width=3),
+                stackgroup='one',
+                hovertemplate='Mobile: $%{y:,.0f}<extra></extra>'
+            ))
 
-    if 'Desktop Spend' in df.columns:
-        fig.add_trace(go.Scatter(
-            x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
-            y=df['Desktop Spend'],
-            name='Desktop',
-            line=dict(color='#f39c12', width=3),
-            stackgroup='one',
-            hovertemplate='Desktop: $%{y:,.0f}<extra></extra>'
-        ))
+        if 'Desktop Spend' in df.columns:
+            fig.add_trace(go.Scatter(
+                x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
+                y=df['Desktop Spend'],
+                name='Desktop',
+                line=dict(color='#f39c12', width=3),
+                stackgroup='one',
+                hovertemplate='Desktop: $%{y:,.0f}<extra></extra>'
+            ))
+    except Exception as e:
+        return create_empty_chart(f"Error rendering PPC data: {str(e)}")
 
     fig.update_layout(
         title="PPC Spend Trend",
@@ -324,6 +328,11 @@ def create_tactics_matrix_scatter(df):
     if df is None or df.empty:
         return create_empty_chart("Tactics data not available")
 
+    # Check for required columns
+    required_cols = ['Total Effort', 'Expected Lift %']
+    if not all(col in df.columns for col in required_cols):
+        return create_empty_chart("Tactics data missing required columns")
+
     fig = go.Figure()
 
     # Color mapping by funnel stage
@@ -334,45 +343,48 @@ def create_tactics_matrix_scatter(df):
         'User Experience': '#e74c3c'
     }
 
-    if 'Focus (Funnel Stage)' in df.columns:
-        for stage in df['Focus (Funnel Stage)'].unique():
-            subset = df[df['Focus (Funnel Stage)'] == stage]
+    try:
+        if 'Focus (Funnel Stage)' in df.columns:
+            for stage in df['Focus (Funnel Stage)'].unique():
+                subset = df[df['Focus (Funnel Stage)'] == stage]
 
-            fig.add_trace(go.Scatter(
-                x=subset['Total Effort'] if 'Total Effort' in subset.columns else [],
-                y=subset['Expected Lift %'] * 100 if 'Expected Lift %' in subset.columns else [],
-                mode='markers+text',
-                name=stage,
-                marker=dict(
-                    size=subset['Projected Cost'] / 50 if 'Projected Cost' in subset.columns else 10,
-                    color=color_map.get(stage, '#95a5a6'),
-                    line=dict(width=2, color='white')
-                ),
-                text=subset['Marketing Tactic'] if 'Marketing Tactic' in subset.columns else subset.get('Tactics', ''),
-                textposition='top center',
-                textfont=dict(size=9),
-                hovertemplate='<b>%{text}</b><br>Effort: %{x}<br>Lift: %{y:.1f}%<extra></extra>'
-            ))
+                fig.add_trace(go.Scatter(
+                    x=subset['Total Effort'] if 'Total Effort' in subset.columns else [],
+                    y=subset['Expected Lift %'] * 100 if 'Expected Lift %' in subset.columns else [],
+                    mode='markers+text',
+                    name=stage,
+                    marker=dict(
+                        size=subset['Projected Cost'] / 50 if 'Projected Cost' in subset.columns else 10,
+                        color=color_map.get(stage, '#95a5a6'),
+                        line=dict(width=2, color='white')
+                    ),
+                    text=subset['Marketing Tactic'] if 'Marketing Tactic' in subset.columns else subset.get('Tactics', ''),
+                    textposition='top center',
+                    textfont=dict(size=9),
+                    hovertemplate='<b>%{text}</b><br>Effort: %{x}<br>Lift: %{y:.1f}%<extra></extra>'
+                ))
 
-    # Add quadrant lines
-    fig.add_hline(y=0.5, line_dash="dash", line_color="gray", opacity=0.5)
-    fig.add_vline(x=10, line_dash="dash", line_color="gray", opacity=0.5)
+        # Add quadrant lines
+        fig.add_hline(y=0.5, line_dash="dash", line_color="gray", opacity=0.5)
+        fig.add_vline(x=10, line_dash="dash", line_color="gray", opacity=0.5)
 
-    # Add quadrant labels
-    fig.add_annotation(text="Quick Wins", x=5, y=0.6, showarrow=False,
-                      font=dict(size=14, color='green'))
-    fig.add_annotation(text="Major Projects", x=15, y=0.6, showarrow=False,
-                      font=dict(size=14, color='orange'))
+        # Add quadrant labels
+        fig.add_annotation(text="Quick Wins", x=5, y=0.6, showarrow=False,
+                          font=dict(size=14, color='green'))
+        fig.add_annotation(text="Major Projects", x=15, y=0.6, showarrow=False,
+                          font=dict(size=14, color='orange'))
 
-    fig.update_layout(
-        title="Marketing Tactics: Effort vs. Impact",
-        xaxis_title="Total Effort (People + Cost)",
-        yaxis_title="Expected Lift (%)",
-        height=600,
-        template='plotly_white',
-        showlegend=True,
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
-    )
+        fig.update_layout(
+            title="Marketing Tactics: Effort vs. Impact",
+            xaxis_title="Total Effort (People + Cost)",
+            yaxis_title="Expected Lift (%)",
+            height=600,
+            template='plotly_white',
+            showlegend=True,
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        )
+    except Exception as e:
+        return create_empty_chart(f"Error rendering tactics matrix: {str(e)}")
 
     return dcc.Graph(figure=fig)
 
@@ -388,24 +400,27 @@ def create_keyword_share_chart(df, top_n=15):
     Returns:
         dcc.Graph - Horizontal bar chart
     """
-    if df is None or df.empty:
+    if df is None or df.empty or 'Keyword' not in df.columns:
         return create_empty_chart("Keyword data not available")
 
-    # Take top N keywords by clicks
-    if 'Clicks' in df.columns:
-        df_top = df.nlargest(top_n, 'Clicks')
-    else:
-        df_top = df.head(top_n)
+    try:
+        # Take top N keywords by clicks
+        if 'Clicks' in df.columns:
+            df_top = df.nlargest(top_n, 'Clicks')
+        else:
+            df_top = df.head(top_n)
 
-    fig = go.Figure()
+        fig = go.Figure()
 
-    fig.add_trace(go.Bar(
-        y=df_top['Keyword'] if 'Keyword' in df_top.columns else df_top.index,
-        x=df_top['Clicks'] if 'Clicks' in df_top.columns else [],
-        orientation='h',
-        marker_color='#667eea',
-        hovertemplate='<b>%{y}</b><br>Clicks: %{x:,.0f}<extra></extra>'
-    ))
+        fig.add_trace(go.Bar(
+            y=df_top['Keyword'] if 'Keyword' in df_top.columns else df_top.index,
+            x=df_top['Clicks'] if 'Clicks' in df_top.columns else range(len(df_top)),
+            orientation='h',
+            marker_color='#667eea',
+            hovertemplate='<b>%{y}</b><br>Clicks: %{x:,.0f}<extra></extra>'
+        ))
+    except Exception as e:
+        return create_empty_chart(f"Error rendering keyword data: {str(e)}")
 
     fig.update_layout(
         title=f"Top {top_n} Keywords by Traffic",
