@@ -80,8 +80,8 @@ def create_traffic_scale_scatter(df, company_focus='dossier'):
         showlegend=False
     )
 
-    fig.update_xaxis(tickformat=',')
-    fig.update_yaxis(ticksuffix='%', zeroline=True, zerolinewidth=2, zerolinecolor='#34495e')
+    fig.update_xaxes(tickformat=',')
+    fig.update_yaxes(ticksuffix='%', zeroline=True, zerolinewidth=2, zerolinecolor='#34495e')
 
     return dcc.Graph(figure=fig)
 
@@ -144,7 +144,7 @@ def create_traffic_sources_chart(df):
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
     )
 
-    fig.update_yaxis(ticksuffix='%', range=[0, 100])
+    fig.update_yaxes(ticksuffix='%', range=[0, 100])
 
     return dcc.Graph(figure=fig)
 
@@ -200,8 +200,8 @@ def create_engagement_scatter(df):
         showlegend=False
     )
 
-    fig.update_xaxis(ticksuffix='%', range=[0, 100])
-    fig.update_yaxis(range=[0, 3.5])
+    fig.update_xaxes(ticksuffix='%', range=[0, 100])
+    fig.update_yaxes(range=[0, 3.5])
 
     return dcc.Graph(figure=fig)
 
@@ -254,7 +254,7 @@ def create_web_vitals_chart(df):
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
     )
 
-    fig.update_yaxis(range=[0, 100])
+    fig.update_yaxes(range=[0, 100])
 
     return dcc.Graph(figure=fig)
 
@@ -303,7 +303,7 @@ def create_ppc_spend_trend(df):
         hovermode='x unified'
     )
 
-    fig.update_yaxis(tickprefix='$', tickformat=',')
+    fig.update_yaxes(tickprefix='$', tickformat=',')
 
     return dcc.Graph(figure=fig)
 
@@ -415,7 +415,7 @@ def create_keyword_share_chart(df, top_n=15):
         template='plotly_white'
     )
 
-    fig.update_xaxis(tickformat=',')
+    fig.update_xaxes(tickformat=',')
 
     return dcc.Graph(figure=fig)
 
