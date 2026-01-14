@@ -74,14 +74,15 @@ def create_traffic_scale_scatter(df, company_focus='dossier'):
         title="Traffic Scale Analysis",
         xaxis_title="Monthly Visits",
         yaxis_title="YoY Growth (%)",
-        height=500,
+        width=600,
+        height=600,
         template='plotly_white',
         hovermode='closest',
         showlegend=False
     )
 
-    fig.update_xaxes(tickformat=',')
-    fig.update_yaxes(ticksuffix='%', zeroline=True, zerolinewidth=2, zerolinecolor='#34495e')
+    fig.update_xaxes(tickformat=',', constrain='domain')
+    fig.update_yaxes(ticksuffix='%', zeroline=True, zerolinewidth=2, zerolinecolor='#34495e', scaleanchor="x", scaleratio=1)
 
     return dcc.Graph(figure=fig)
 
@@ -195,14 +196,15 @@ def create_engagement_scatter(df):
         title="Site Engagement Analysis",
         xaxis_title="Bounce Rate (%)",
         yaxis_title="Visit Duration (minutes)",
-        height=500,
+        width=600,
+        height=600,
         template='plotly_white',
         hovermode='closest',
         showlegend=False
     )
 
-    fig.update_xaxes(ticksuffix='%', range=[0, 100])
-    fig.update_yaxes(range=[0, 3.5])
+    fig.update_xaxes(ticksuffix='%', range=[0, 100], constrain='domain')
+    fig.update_yaxes(range=[0, 3.5], scaleanchor="x", scaleratio=1)
 
     return dcc.Graph(figure=fig)
 
@@ -276,14 +278,18 @@ def create_ppc_spend_trend(df):
     fig = go.Figure()
 
     try:
+        # Create stacked area chart
         if 'Mobile Spend' in df.columns:
             fig.add_trace(go.Scatter(
                 x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
                 y=df['Mobile Spend'],
                 name='Mobile',
-                line=dict(color='#667eea', width=3),
+                mode='lines',
+                line=dict(color='#667eea', width=0),
+                fillcolor='rgba(102, 126, 234, 0.5)',
+                fill='tozeroy',
                 stackgroup='one',
-                hovertemplate='Mobile: $%{y:,.0f}<extra></extra>'
+                hovertemplate='<b>Mobile</b><br>$%{y:,.0f}<extra></extra>'
             ))
 
         if 'Desktop Spend' in df.columns:
@@ -291,23 +297,27 @@ def create_ppc_spend_trend(df):
                 x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
                 y=df['Desktop Spend'],
                 name='Desktop',
-                line=dict(color='#f39c12', width=3),
+                mode='lines',
+                line=dict(color='#f39c12', width=0),
+                fillcolor='rgba(243, 156, 18, 0.5)',
+                fill='tonexty',
                 stackgroup='one',
-                hovertemplate='Desktop: $%{y:,.0f}<extra></extra>'
+                hovertemplate='<b>Desktop</b><br>$%{y:,.0f}<extra></extra>'
             ))
     except Exception as e:
         return create_empty_chart(f"Error rendering PPC data: {str(e)}")
 
     fig.update_layout(
-        title="PPC Spend Trend",
+        title="PPC Spend Trend (Mobile + Desktop)",
         xaxis_title="Month",
         yaxis_title="Spend ($)",
-        height=400,
+        height=450,
         template='plotly_white',
-        hovermode='x unified'
+        hovermode='x unified',
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
     )
 
-    fig.update_yaxes(tickprefix='$', tickformat=',')
+    fig.update_yaxes(tickprefix='$', tickformat=',', rangemode='tozero')
 
     return dcc.Graph(figure=fig)
 
@@ -378,11 +388,15 @@ def create_tactics_matrix_scatter(df):
             title="Marketing Tactics: Effort vs. Impact",
             xaxis_title="Total Effort (People + Cost)",
             yaxis_title="Expected Lift (%)",
-            height=600,
+            width=700,
+            height=700,
             template='plotly_white',
             showlegend=True,
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
+
+        fig.update_xaxes(constrain='domain')
+        fig.update_yaxes(scaleanchor="x", scaleratio=1)
     except Exception as e:
         return create_empty_chart(f"Error rendering tactics matrix: {str(e)}")
 
