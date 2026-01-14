@@ -8,6 +8,7 @@ import dash_bootstrap_components as dbc
 from components.metric_cards import create_channel_card
 from components.charts import create_donut_chart
 from config.branding import ClientBranding
+from typing import List, Dict
 
 
 def create_layout(channel_data=None, theme=None):
@@ -136,69 +137,57 @@ def create_layout(channel_data=None, theme=None):
             })
         ], style={'padding': '0 40px', 'marginBottom': '40px'}),
 
-        # Key insights section
-        html.Div([
-            html.H2("Key Insights", style={
-                'color': '#2c3e50',
-                'fontSize': '24px',
-                'fontWeight': '700',
-                'marginBottom': '20px'
-            }),
-            html.Div([
-                # Insight cards
-                html.Div([
-                    html.Div([
-                        html.H4("🎯 Strong Omni-Channel Foundation", style={
-                            'color': '#2c3e50',
-                            'marginBottom': '10px'
-                        }),
-                        html.P(
-                            "Multi-channel distribution reduces dependency on any single channel. "
-                            "DTC remains core engine while retail expansion drives incremental growth.",
-                            style={'color': '#7f8c8d', 'lineHeight': 1.6}
-                        )
-                    ], style={
-                        'background': '#f8f9fa',
-                        'padding': '20px',
-                        'borderRadius': '10px',
-                        'borderLeft': '4px solid #667eea',
-                        'marginBottom': '15px'
-                    }),
-                    html.Div([
-                        html.H4("📈 TikTok Shop Breakout Success", style={
-                            'color': '#2c3e50',
-                            'marginBottom': '10px'
-                        }),
-                        html.P(
-                            "Rapid scale from 1% to 15%+ of units demonstrates strong product-market fit "
-                            "with Gen Z consumers and effectiveness of influencer collaborations.",
-                            style={'color': '#7f8c8d', 'lineHeight': 1.6}
-                        )
-                    ], style={
-                        'background': '#f8f9fa',
-                        'padding': '20px',
-                        'borderRadius': '10px',
-                        'borderLeft': '4px solid #e74c3c',
-                        'marginBottom': '15px'
-                    }),
-                    html.Div([
-                        html.H4("⚠️ Digital Traffic Headwinds", style={
-                            'color': '#2c3e50',
-                            'marginBottom': '10px'
-                        }),
-                        html.P(
-                            "Despite strong brand awareness (79% direct/organic traffic), overall digital traffic "
-                            "shows negative YoY growth. Clear opportunity to expand reach through paid acquisition.",
-                            style={'color': '#7f8c8d', 'lineHeight': 1.6}
-                        )
-                    ], style={
-                        'background': '#f8f9fa',
-                        'padding': '20px',
-                        'borderRadius': '10px',
-                        'borderLeft': '4px solid #f39c12'
-                    })
-                ])
-            ])
-        ], style={'padding': '0 40px', 'marginBottom': '40px'})
+        # Key insights section - Dynamic content container
+        html.Div(id='executive-insights', style={'padding': '0 40px', 'marginBottom': '40px'})
 
     ], style={'padding': '30px 0'})
+
+
+def create_dynamic_insights(insights: List[Dict]) -> html.Div:
+    """
+    Create dynamic insights section from AI-generated insights.
+
+    Args:
+        insights: list of dicts with keys: icon, title, description, color
+
+    Returns:
+        html.Div - Insights section
+    """
+    if not insights:
+        # Return default placeholder insights
+        insights = [
+            {
+                'icon': '🎯',
+                'title': 'Upload Data for Insights',
+                'description': 'Upload your marketing data Excel file to see AI-powered insights based on your performance metrics.',
+                'color': '#667eea'
+            }
+        ]
+
+    return html.Div([
+        html.H2("Key Insights", style={
+            'color': '#2c3e50',
+            'fontSize': '24px',
+            'fontWeight': '700',
+            'marginBottom': '20px'
+        }),
+        html.Div([
+            html.Div([
+                html.H4(f"{insight['icon']} {insight['title']}", style={
+                    'color': '#2c3e50',
+                    'marginBottom': '10px'
+                }),
+                html.P(
+                    insight['description'],
+                    style={'color': '#7f8c8d', 'lineHeight': 1.6}
+                )
+            ], style={
+                'background': '#f8f9fa',
+                'padding': '20px',
+                'borderRadius': '10px',
+                'borderLeft': f"4px solid {insight['color']}",
+                'marginBottom': '15px'
+            })
+            for insight in insights
+        ])
+    ])

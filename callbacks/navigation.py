@@ -5,6 +5,8 @@ Handles URL-based navigation between dashboard sections.
 
 from dash import Input, Output, html
 import pandas as pd
+from utils.recommendation_engine import RecommendationEngine
+from layouts.executive_summary import create_dynamic_insights
 
 
 def register_callbacks(app):
@@ -80,6 +82,54 @@ def register_callbacks(app):
             if processed_data and 'executive_summary' in processed_data:
                 return executive_summary.create_layout(processed_data['executive_summary'])
             return executive_summary.create_layout()
+
+    @app.callback(
+        Output('executive-insights', 'children'),
+        [Input('data-store', 'data'),
+         Input('url', 'pathname')]
+    )
+    def update_executive_insights(data, pathname):
+        """
+        Generate dynamic insights for Executive Summary page.
+
+        Args:
+            data: dict - Processed data from upload
+            pathname: str - Current URL path
+
+        Returns:
+            html.Div - Dynamic insights section
+        """
+        # Only generate insights for executive summary page
+        if pathname not in ['/', '/executive', None]:
+            return html.Div()
+
+        if not data:
+            # Return placeholder when no data
+            return create_dynamic_insights([])
+
+        try:
+            # Initialize recommendation engine
+            engine = RecommendationEngine(processed_data=data)
+
+            # Analyze current state
+            engine.analyze_current_state()
+
+            # Generate executive insights
+            insights = engine.generate_executive_insights()
+
+            return create_dynamic_insights(insights)
+
+        except Exception as e:
+            # Return error message
+            return html.Div([
+                html.H2("Key Insights", style={'color': '#2c3e50', 'marginBottom': '20px'}),
+                html.Div(f"Error generating insights: {str(e)}", style={
+                    'color': '#e74c3c',
+                    'padding': '20px',
+                    'background': '#f8f9fa',
+                    'borderRadius': '10px'
+                })
+            ])
 
 
 def create_paid_search_page(data):

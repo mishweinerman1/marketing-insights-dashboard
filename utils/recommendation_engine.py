@@ -391,3 +391,109 @@ class RecommendationEngine:
             roadmap['Phase 3 (Month 5-6): Strategic Optimization'] = strategic[:2]
 
         return roadmap
+
+    def generate_executive_insights(self) -> List[Dict]:
+        """
+        Generate dynamic insights for Executive Summary page.
+
+        Returns:
+            list of dicts with insight icon, title, description, and color
+        """
+        insights = []
+
+        if not self.current_state:
+            self.analyze_current_state()
+
+        strengths = self.current_state.get('strengths', [])
+        weaknesses = self.current_state.get('weaknesses', [])
+        opportunities = self.current_state.get('opportunities', [])
+
+        # Add strength-based insight
+        if strengths:
+            strength_messages = []
+            for strength in strengths[:2]:
+                if isinstance(strength, dict):
+                    strength_messages.append(strength.get('message', ''))
+                else:
+                    strength_messages.append(str(strength))
+
+            if strength_messages:
+                insights.append({
+                    'icon': '✅',
+                    'title': 'Strong Foundation',
+                    'description': ' '.join(strength_messages),
+                    'color': '#667eea'
+                })
+
+        # Add opportunity-based insight
+        if opportunities:
+            opp_messages = []
+            for opp in opportunities[:2]:
+                if isinstance(opp, dict):
+                    if 'type' == 'quick_wins':
+                        opp_messages.append(f"Identified {opp.get('count', 0)} quick-win tactics with low effort and high impact")
+                    else:
+                        opp_messages.append(opp.get('message', ''))
+                else:
+                    opp_messages.append(str(opp))
+
+            if opp_messages:
+                insights.append({
+                    'icon': '🎯',
+                    'title': 'Growth Opportunities',
+                    'description': ' '.join(opp_messages),
+                    'color': '#2ecc71'
+                })
+
+        # Add challenge/weakness insight
+        if weaknesses:
+            weakness_messages = []
+            for weakness in weaknesses[:2]:
+                if isinstance(weakness, dict):
+                    weakness_messages.append(weakness.get('message', ''))
+                else:
+                    weakness_messages.append(str(weakness))
+
+            if weakness_messages:
+                insights.append({
+                    'icon': '⚠️',
+                    'title': 'Areas for Improvement',
+                    'description': ' '.join(weakness_messages),
+                    'color': '#f39c12'
+                })
+
+        # Add data-driven metrics insight
+        tactics_data = self.data.get('tactics', [])
+        keywords_data = self.data.get('keywords_organic', [])
+
+        if tactics_data or keywords_data:
+            metric_parts = []
+
+            if tactics_data:
+                tactics_df = pd.DataFrame(tactics_data) if isinstance(tactics_data, list) else tactics_data
+                if not tactics_df.empty:
+                    metric_parts.append(f"{len(tactics_df)} marketing tactics analyzed")
+
+            if keywords_data:
+                kw_df = pd.DataFrame(keywords_data) if isinstance(keywords_data, list) else keywords_data
+                if not kw_df.empty:
+                    metric_parts.append(f"{len(kw_df)} keywords tracked")
+
+            if metric_parts:
+                insights.append({
+                    'icon': '📊',
+                    'title': 'Data Overview',
+                    'description': ', '.join(metric_parts) + '. AI-powered analysis completed to identify high-impact opportunities.',
+                    'color': '#3498db'
+                })
+
+        # If no insights generated, add a default one
+        if not insights:
+            insights.append({
+                'icon': '📈',
+                'title': 'Marketing Performance Analysis',
+                'description': 'Your data has been analyzed. Review detailed channel performance in the navigation tabs above to see specific metrics and recommendations.',
+                'color': '#667eea'
+            })
+
+        return insights[:4]  # Return top 4 insights
