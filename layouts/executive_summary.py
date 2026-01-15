@@ -75,25 +75,27 @@ def create_layout(channel_data=None, theme=None):
         }
 
     return html.Div([
-        # Page title
+        # Page title - VortexMini style
         html.Div([
             html.H1("Executive Summary", style={
                 'color': '#2c3e50',
-                'fontSize': '36px',
-                'fontWeight': '700',
-                'marginBottom': '10px'
+                'fontSize': '32px',
+                'fontWeight': '600',
+                'marginBottom': '8px',
+                'letterSpacing': '-0.5px'
             }),
             html.P(
                 "Omni-channel business showing strong growth in retail and TikTok Shop channels",
                 style={
                     'color': '#7f8c8d',
-                    'fontSize': '16px',
-                    'marginBottom': '30px'
+                    'fontSize': '15px',
+                    'marginBottom': '35px',
+                    'lineHeight': '1.5'
                 }
             )
-        ], style={'padding': '0 40px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '15px'}),
 
-        # 4 Channel cards
+        # 4 Channel cards - VortexMini style
         html.Div([
             html.Div([
                 create_channel_card(
@@ -105,18 +107,19 @@ def create_layout(channel_data=None, theme=None):
             ], style={
                 'display': 'grid',
                 'gridTemplateColumns': 'repeat(auto-fit, minmax(280px, 1fr))',
-                'gap': '25px',
-                'marginBottom': '40px'
+                'gap': '20px',
+                'marginBottom': '30px'
             })
-        ], style={'padding': '0 40px'}),
+        ], style={'padding': '0 30px'}),
 
-        # Revenue mix donut chart
+        # Revenue mix donut chart - VortexMini style
         html.Div([
             html.H2("Revenue Mix by Channel", style={
                 'color': '#2c3e50',
-                'fontSize': '24px',
-                'fontWeight': '700',
-                'marginBottom': '20px'
+                'fontSize': '20px',
+                'fontWeight': '600',
+                'marginBottom': '18px',
+                'letterSpacing': '-0.3px'
             }),
             html.Div([
                 create_donut_chart(
@@ -131,16 +134,17 @@ def create_layout(channel_data=None, theme=None):
                 )
             ], style={
                 'background': '#ffffff',
-                'borderRadius': '15px',
-                'padding': '20px',
-                'boxShadow': '0 2px 10px rgba(0,0,0,0.05)'
+                'borderRadius': '8px',
+                'padding': '25px',
+                'boxShadow': '0 1px 3px rgba(0,0,0,0.08)',
+                'border': '1px solid #e0e0e0'
             })
-        ], style={'padding': '0 40px', 'marginBottom': '40px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '35px'}),
 
         # Key insights section - Dynamic content container
-        html.Div(id='executive-insights', style={'padding': '0 40px', 'marginBottom': '40px'})
+        html.Div(id='executive-insights', style={'padding': '0 30px', 'marginBottom': '30px'})
 
-    ], style={'padding': '30px 0'})
+    ], style={'padding': '20px 0', 'background': '#fafafa'})
 
 
 def create_dynamic_insights(insights: List[Dict]) -> html.Div:
@@ -167,26 +171,31 @@ def create_dynamic_insights(insights: List[Dict]) -> html.Div:
     return html.Div([
         html.H2("Key Insights", style={
             'color': '#2c3e50',
-            'fontSize': '24px',
-            'fontWeight': '700',
-            'marginBottom': '20px'
+            'fontSize': '20px',
+            'fontWeight': '600',
+            'marginBottom': '18px',
+            'letterSpacing': '-0.3px'
         }),
         html.Div([
             html.Div([
                 html.H4(f"{insight['icon']} {insight['title']}", style={
                     'color': '#2c3e50',
-                    'marginBottom': '10px'
+                    'marginBottom': '12px',
+                    'fontSize': '16px',
+                    'fontWeight': '600'
                 }),
                 html.P(
                     insight['description'],
-                    style={'color': '#7f8c8d', 'lineHeight': 1.6}
+                    style={'color': '#7f8c8d', 'lineHeight': '1.6', 'fontSize': '14px'}
                 )
             ], style={
-                'background': '#f8f9fa',
-                'padding': '20px',
-                'borderRadius': '10px',
-                'borderLeft': f"4px solid {insight['color']}",
-                'marginBottom': '15px'
+                'background': '#ffffff',
+                'padding': '20px 24px',
+                'borderRadius': '8px',
+                'borderLeft': f"3px solid {insight['color']}",
+                'marginBottom': '12px',
+                'boxShadow': '0 1px 3px rgba(0,0,0,0.06)',
+                'transition': 'all 0.2s ease'
             })
             for insight in insights
         ])

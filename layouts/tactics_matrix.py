@@ -20,125 +20,134 @@ def create_layout(tactics_data=None):
         html.Div - Tactics matrix layout
     """
     return html.Div([
-        # Page title
+        # Page title - VortexMini style
         html.Div([
             html.H1("Marketing Tactics: Prioritization Matrix", style={
                 'color': '#2c3e50',
-                'fontSize': '36px',
-                'fontWeight': '700',
-                'marginBottom': '10px'
+                'fontSize': '32px',
+                'fontWeight': '600',
+                'marginBottom': '8px',
+                'letterSpacing': '-0.5px'
             }),
             html.P(
                 "Effort vs. Impact analysis to identify quick wins and strategic initiatives",
                 style={
                     'color': '#7f8c8d',
-                    'fontSize': '16px',
-                    'marginBottom': '30px'
+                    'fontSize': '15px',
+                    'marginBottom': '30px',
+                    'lineHeight': '1.5'
                 }
             )
-        ], style={'padding': '0 40px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '15px'}),
 
-        # IE Matrix scatter plot
+        # IE Matrix scatter plot - VortexMini style
         html.Div([
             html.H2("Effort vs. Impact Matrix", style={
                 'color': '#2c3e50',
-                'fontSize': '24px',
-                'fontWeight': '700',
-                'marginBottom': '15px'
+                'fontSize': '20px',
+                'fontWeight': '600',
+                'marginBottom': '12px',
+                'letterSpacing': '-0.3px'
             }),
             html.P(
                 "Bubble size represents projected cost. Color indicates funnel stage.",
-                style={'color': '#7f8c8d', 'fontSize': '14px', 'marginBottom': '15px'}
+                style={'color': '#7f8c8d', 'fontSize': '13px', 'marginBottom': '15px'}
             ),
             html.Div([
                 create_tactics_matrix_scatter(tactics_data)
             ], style={
                 'background': '#ffffff',
-                'borderRadius': '15px',
-                'padding': '20px',
-                'boxShadow': '0 2px 10px rgba(0,0,0,0.05)',
-                'marginBottom': '30px'
+                'borderRadius': '8px',
+                'padding': '25px',
+                'boxShadow': '0 1px 3px rgba(0,0,0,0.08)',
+                'border': '1px solid #e0e0e0'
             })
-        ], style={'padding': '0 40px', 'marginBottom': '40px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '35px'}),
 
-        # Quadrant explanations
+        # Quadrant explanations - VortexMini style
         html.Div([
             html.Div([
                 html.Div([
-                    html.H4("🎯 Quick Wins", style={'color': '#27ae60', 'marginBottom': '10px'}),
+                    html.H4("🎯 Quick Wins", style={'color': '#27ae60', 'marginBottom': '8px', 'fontSize': '16px', 'fontWeight': '600'}),
                     html.P("Low effort, high impact - Prioritize these tactics first",
-                          style={'color': '#7f8c8d', 'fontSize': '14px'})
+                          style={'color': '#34495e', 'fontSize': '13px', 'lineHeight': '1.5'})
                 ], style={
-                    'background': '#d4edda',
-                    'padding': '20px',
-                    'borderRadius': '10px',
+                    'background': '#ffffff',
+                    'padding': '18px 20px',
+                    'borderRadius': '8px',
                     'flex': 1,
-                    'margin': '0 10px'
+                    'border': '2px solid #27ae60',
+                    'boxShadow': '0 1px 3px rgba(0,0,0,0.06)'
                 }),
                 html.Div([
-                    html.H4("🚀 Major Projects", style={'color': '#e67e22', 'marginBottom': '10px'}),
+                    html.H4("🚀 Major Projects", style={'color': '#e67e22', 'marginBottom': '8px', 'fontSize': '16px', 'fontWeight': '600'}),
                     html.P("High effort, high impact - Strategic initiatives requiring resources",
-                          style={'color': '#7f8c8d', 'fontSize': '14px'})
+                          style={'color': '#34495e', 'fontSize': '13px', 'lineHeight': '1.5'})
                 ], style={
-                    'background': '#fff3cd',
-                    'padding': '20px',
-                    'borderRadius': '10px',
+                    'background': '#ffffff',
+                    'padding': '18px 20px',
+                    'borderRadius': '8px',
                     'flex': 1,
-                    'margin': '0 10px'
+                    'border': '2px solid #e67e22',
+                    'boxShadow': '0 1px 3px rgba(0,0,0,0.06)'
                 }),
                 html.Div([
-                    html.H4("⏳ Strategic", style={'color': '#3498db', 'marginBottom': '10px'}),
+                    html.H4("⏳ Strategic", style={'color': '#5c6bc0', 'marginBottom': '8px', 'fontSize': '16px', 'fontWeight': '600'}),
                     html.P("Low effort, low impact - Tactical improvements for optimization",
-                          style={'color': '#7f8c8d', 'fontSize': '14px'})
+                          style={'color': '#34495e', 'fontSize': '13px', 'lineHeight': '1.5'})
                 ], style={
-                    'background': '#d1ecf1',
-                    'padding': '20px',
-                    'borderRadius': '10px',
+                    'background': '#ffffff',
+                    'padding': '18px 20px',
+                    'borderRadius': '8px',
                     'flex': 1,
-                    'margin': '0 10px'
+                    'border': '2px solid #5c6bc0',
+                    'boxShadow': '0 1px 3px rgba(0,0,0,0.06)'
                 }),
                 html.Div([
-                    html.H4("❌ Low Priority", style={'color': '#c0392b', 'marginBottom': '10px'}),
+                    html.H4("❌ Low Priority", style={'color': '#c0392b', 'marginBottom': '8px', 'fontSize': '16px', 'fontWeight': '600'}),
                     html.P("High effort, low impact - Deprioritize or avoid",
-                          style={'color': '#7f8c8d', 'fontSize': '14px'})
+                          style={'color': '#34495e', 'fontSize': '13px', 'lineHeight': '1.5'})
                 ], style={
-                    'background': '#f8d7da',
-                    'padding': '20px',
-                    'borderRadius': '10px',
+                    'background': '#ffffff',
+                    'padding': '18px 20px',
+                    'borderRadius': '8px',
                     'flex': 1,
-                    'margin': '0 10px'
+                    'border': '2px solid #c0392b',
+                    'boxShadow': '0 1px 3px rgba(0,0,0,0.06)'
                 })
-            ], style={'display': 'flex', 'gap': '20px', 'flexWrap': 'wrap'})
-        ], style={'padding': '0 40px', 'marginBottom': '40px'}),
+            ], style={'display': 'flex', 'gap': '15px', 'flexWrap': 'wrap'})
+        ], style={'padding': '0 30px', 'marginBottom': '35px'}),
 
         # AI Recommendations Panel
-        html.Div(id='recommendations-panel', style={'padding': '0 40px'}),
+        html.Div(id='recommendations-panel', style={'padding': '0 30px', 'marginBottom': '35px'}),
 
         # Competitive Intelligence Panel
-        html.Div(id='competitive-intel-panel', style={'padding': '0 40px'}),
+        html.Div(id='competitive-intel-panel', style={'padding': '0 30px', 'marginBottom': '35px'}),
 
-        # Tactics table
+        # Tactics table - VortexMini style
         html.Div([
             html.H2("All Marketing Tactics", style={
                 'color': '#2c3e50',
-                'fontSize': '24px',
-                'fontWeight': '700',
-                'marginBottom': '15px'
+                'fontSize': '20px',
+                'fontWeight': '600',
+                'marginBottom': '18px',
+                'letterSpacing': '-0.3px'
             }),
             html.Div([
                 create_tactics_table(tactics_data) if tactics_data is not None else html.Div(
                     "Upload data to view tactics table",
-                    style={'padding': '40px', 'textAlign': 'center', 'color': '#95a5a6'}
+                    style={'padding': '40px', 'textAlign': 'center', 'color': '#95a5a6', 'fontSize': '14px'}
                 )
             ], style={
                 'background': '#ffffff',
-                'borderRadius': '15px',
+                'borderRadius': '8px',
                 'padding': '20px',
-                'boxShadow': '0 2px 10px rgba(0,0,0,0.05)'
+                'boxShadow': '0 1px 3px rgba(0,0,0,0.08)',
+                'border': '1px solid #e0e0e0'
             })
-        ], style={'padding': '0 40px', 'marginBottom': '40px'})
+        ], style={'padding': '0 30px', 'marginBottom': '30px'})
 
-    ], style={'padding': '30px 0'})
+    ], style={'padding': '20px 0', 'background': '#fafafa'})
 
 
 def create_tactics_table(df):
@@ -200,9 +209,9 @@ def create_tactics_table(df):
                     'filter_query': '{Priority Score} > 2.0',
                     'column_id': 'Priority Score'
                 },
-                'backgroundColor': '#d4edda',
-                'color': '#155724',
-                'fontWeight': 'bold'
+                'backgroundColor': '#e8f5e9',
+                'color': '#2e7d32',
+                'fontWeight': '600'
             },
             {
                 'if': {'row_index': 'odd'},
@@ -214,16 +223,23 @@ def create_tactics_table(df):
         page_size=20,
         style_cell={
             'textAlign': 'left',
-            'padding': '12px',
+            'padding': '12px 15px',
             'fontSize': '13px',
-            'fontFamily': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto'
+            'fontFamily': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            'border': 'none',
+            'borderBottom': '1px solid #e0e0e0'
         },
         style_header={
-            'backgroundColor': '#2c3e50',
+            'backgroundColor': '#5c6bc0',
             'color': 'white',
-            'fontWeight': 'bold',
-            'fontSize': '14px',
-            'padding': '15px'
+            'fontWeight': '600',
+            'fontSize': '13px',
+            'padding': '12px 15px',
+            'borderBottom': '2px solid #3f51b5'
+        },
+        style_data={
+            'backgroundColor': 'white',
+            'color': '#2c3e50'
         },
         style_table={
             'overflowX': 'auto'

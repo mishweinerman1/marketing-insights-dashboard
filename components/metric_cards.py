@@ -7,7 +7,7 @@ from dash import html
 import dash_bootstrap_components as dbc
 
 
-def create_metric_card(title, value, subtitle=None, icon=None, color='#667eea', change=None):
+def create_metric_card(title, value, subtitle=None, icon=None, color='#5c6bc0', change=None):
     """
     Creates a single metric card.
 
@@ -201,14 +201,14 @@ def create_insight_card(title, finding, recommendation):
             html.Span(finding, style={'color': '#7f8c8d'})
         ], style={'marginBottom': '12px', 'fontSize': '14px'}),
         html.Div([
-            html.Strong('Action: ', style={'color': '#667eea'}),
+            html.Strong('Action: ', style={'color': '#5c6bc0'}),
             html.Span(recommendation, style={'color': '#34495e', 'fontWeight': '500'})
         ], style={'fontSize': '14px'})
     ], style={
         'background': '#f8f9fa',
         'padding': '20px',
         'borderRadius': '10px',
-        'borderLeft': '4px solid #667eea',
+        'borderLeft': '4px solid #5c6bc0',
         'marginBottom': '15px'
     })
 

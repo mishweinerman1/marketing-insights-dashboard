@@ -157,19 +157,20 @@ def create_paid_search_page(data):
     total_clicks = "132K" if keywords_data is not None else "N/A"
 
     return html.Div([
-        # Header
+        # Header - VortexMini style
         html.Div([
             html.H1("Paid Search Analysis", style={
                 'color': '#2c3e50',
-                'fontSize': '36px',
-                'fontWeight': '700',
-                'marginBottom': '10px'
+                'fontSize': '32px',
+                'fontWeight': '600',
+                'marginBottom': '8px',
+                'letterSpacing': '-0.5px'
             }),
             html.P(
                 "PPC performance analysis and keyword insights",
-                style={'color': '#7f8c8d', 'fontSize': '16px', 'marginBottom': '30px'}
+                style={'color': '#7f8c8d', 'fontSize': '15px', 'marginBottom': '30px', 'lineHeight': '1.5'}
             )
-        ], style={'padding': '0 40px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '15px'}),
 
         # Metric cards row
         html.Div([
@@ -184,14 +185,14 @@ def create_paid_search_page(data):
             ], style={'flex': '1'})
         ], style={
             'display': 'flex',
-            'padding': '0 40px',
-            'marginBottom': '30px'
+            'padding': '0 30px',
+            'marginBottom': '25px'
         }),
 
         # PPC Spend Chart
         html.Div([
             create_ppc_spend_trend(ppc_data)
-        ], style={'padding': '0 40px', 'marginBottom': '30px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '25px'}),
 
         # Insights and Keywords row
         html.Div([
@@ -206,9 +207,9 @@ def create_paid_search_page(data):
                         "Opportunity to test increased desktop targeting in Q1 2026"
                     ],
                     icon='fa-chart-line',
-                    color='#667eea'
+                    color='#5c6bc0'
                 ),
-                html.Div(style={'height': '20px'}),
+                html.Div(style={'height': '15px'}),
                 create_insight_card(
                     "Recommendations",
                     [
@@ -230,15 +231,15 @@ def create_paid_search_page(data):
             'display': 'flex',
             'flexWrap': 'wrap',
             'gap': '20px',
-            'padding': '0 40px',
-            'marginBottom': '30px'
+            'padding': '0 30px',
+            'marginBottom': '25px'
         }),
 
         # Keyword Share Chart
         html.Div([
             create_keyword_share_chart(keywords_data)
-        ], style={'padding': '0 40px', 'marginBottom': '30px'})
-    ], style={'padding': '30px 0'})
+        ], style={'padding': '0 30px', 'marginBottom': '25px'})
+    ], style={'padding': '20px 0', 'background': '#fafafa'})
 
 
 def create_paid_social_page(data):
@@ -274,19 +275,20 @@ def create_seo_page(data):
     total_backlinks = "1,234" if backlinks_data is not None else "N/A"
 
     return html.Div([
-        # Header
+        # Header - VortexMini style
         html.Div([
             html.H1("SEO Analysis", style={
                 'color': '#2c3e50',
-                'fontSize': '36px',
-                'fontWeight': '700',
-                'marginBottom': '10px'
+                'fontSize': '32px',
+                'fontWeight': '600',
+                'marginBottom': '8px',
+                'letterSpacing': '-0.5px'
             }),
             html.P(
                 "Organic search performance and keyword rankings",
-                style={'color': '#7f8c8d', 'fontSize': '16px', 'marginBottom': '30px'}
+                style={'color': '#7f8c8d', 'fontSize': '15px', 'marginBottom': '30px', 'lineHeight': '1.5'}
             )
-        ], style={'padding': '0 40px'}),
+        ], style={'padding': '0 30px', 'marginBottom': '15px'}),
 
         # Metric cards row
         html.Div([
@@ -301,8 +303,8 @@ def create_seo_page(data):
             ], style={'flex': '1'})
         ], style={
             'display': 'flex',
-            'padding': '0 40px',
-            'marginBottom': '30px'
+            'padding': '0 30px',
+            'marginBottom': '25px'
         }),
 
         # Insights and Keywords row
@@ -349,7 +351,7 @@ def create_seo_page(data):
             # Keywords column
             html.Div([
                 create_keyword_insight_card(keywords_data) if keywords_data is not None else html.Div("No keyword data"),
-                html.Div(style={'height': '20px'}),
+                html.Div(style={'height': '15px'}),
                 html.Div([
                     html.Div([
                         html.I(className='fas fa-link', style={
@@ -448,15 +450,15 @@ def create_seo_page(data):
             'display': 'flex',
             'flexWrap': 'wrap',
             'gap': '20px',
-            'padding': '0 40px',
-            'marginBottom': '30px'
+            'padding': '0 30px',
+            'marginBottom': '25px'
         }),
 
         # Keyword Share Chart
         html.Div([
             create_keyword_share_chart(keywords_data)
-        ], style={'padding': '0 40px', 'marginBottom': '30px'})
-    ], style={'padding': '30px 0'})
+        ], style={'padding': '0 30px', 'marginBottom': '25px'})
+    ], style={'padding': '20px 0', 'background': '#fafafa'})
 
 
 def create_crm_page(data):

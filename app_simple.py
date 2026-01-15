@@ -1,13 +1,13 @@
 """
-Marketing Insights Dashboard - Simplified Version
-Using native Dash tabs for reliability.
+Marketing Insights Dashboard - VortexMini Professional Style
+Professional sidebar navigation with clean, hierarchical design.
 """
 
 import dash
 from dash import html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 from config.branding import ClientBranding
-from components.header import create_header
+from components.sidebar_nav import create_sidebar_nav, create_top_header
 import pandas as pd
 
 # Initialize app
@@ -24,84 +24,162 @@ app = dash.Dash(
 server = app.server
 theme = ClientBranding.get_theme('dossier')
 
-# App layout with native Dash tabs
+# App layout with VortexMini professional design
 app.layout = html.Div([
     dcc.Store(id='data-store', storage_type='session'),
+    dcc.Location(id='url', pathname='/', refresh=False),
 
-    # Header
-    create_header(client_name='Dossier', theme=theme),
+    # Left Sidebar Navigation (220px fixed)
+    html.Div(id='sidebar-container'),
 
-    # File upload
+    # Top Header (60px dark bar)
+    html.Div(id='header-container'),
+
+    # Main Content Area (offset for sidebar and header)
     html.Div([
+        # File upload (shown when no data)
         html.Div([
-            html.H3("Upload Marketing Data", style={'color': '#2c3e50', 'marginBottom': '15px'}),
-            dcc.Upload(
-                id='upload-data',
-                children=html.Div([
-                    html.I(className='fas fa-cloud-upload-alt', style={'fontSize': '36px', 'color': '#667eea', 'marginBottom': '10px'}),
-                    html.Div(['Drag and Drop or ', html.A('Select Excel File', style={'color': '#667eea', 'fontWeight': 'bold'})]),
-                ]),
-                style={
-                    'width': '100%',
-                    'height': '120px',
-                    'lineHeight': '120px',
-                    'borderWidth': '2px',
-                    'borderStyle': 'dashed',
-                    'borderRadius': '10px',
-                    'borderColor': '#667eea',
-                    'textAlign': 'center',
-                    'background': '#f8f9fa',
-                    'cursor': 'pointer'
-                },
-                multiple=False
-            ),
-            html.Div(id='upload-status', style={'marginTop': '15px'}),
-
-            # Business goals selection
             html.Div([
-                html.Label("Select Business Goals:", style={
-                    'fontWeight': '600',
-                    'marginTop': '25px',
-                    'marginBottom': '12px',
+                html.H3("Upload Marketing Data", style={
                     'color': '#2c3e50',
-                    'fontSize': '15px'
+                    'marginBottom': '15px',
+                    'fontSize': '24px',
+                    'fontWeight': '600'
                 }),
-                dcc.Checklist(
-                    id='business-goals',
-                    options=[
-                        {'label': ' Increase Traffic (Acquisition)', 'value': 'acquisition'},
-                        {'label': ' Improve Conversions', 'value': 'conversion'},
-                        {'label': ' Boost Customer Lifetime Value', 'value': 'ltv'},
-                        {'label': ' Enhance User Experience', 'value': 'user_experience'},
-                        {'label': ' Reduce Bounce Rate', 'value': 'engagement'},
-                        {'label': ' Improve SEO Rankings', 'value': 'seo'}
-                    ],
-                    value=['acquisition', 'conversion'],  # Default selections
-                    style={'marginBottom': '20px'},
-                    labelStyle={'display': 'block', 'marginBottom': '8px', 'fontSize': '14px', 'color': '#34495e'}
-                )
-            ], id='goals-section', style={'display': 'none', 'marginTop': '10px'})
-        ], style={'maxWidth': '600px', 'margin': '0 auto', 'padding': '30px'})
-    ], id='upload-section', style={'padding': '20px'}),
+                dcc.Upload(
+                    id='upload-data',
+                    children=html.Div([
+                        html.I(className='fas fa-cloud-upload-alt', style={
+                            'fontSize': '48px',
+                            'color': '#5c6bc0',
+                            'marginBottom': '15px'
+                        }),
+                        html.Div('Drag and Drop or ', style={
+                            'display': 'inline',
+                            'fontSize': '16px',
+                            'color': '#7f8c8d'
+                        }),
+                        html.A('Select Excel File', style={
+                            'color': '#5c6bc0',
+                            'fontWeight': '600',
+                            'textDecoration': 'underline',
+                            'fontSize': '16px'
+                        }),
+                    ], style={
+                        'display': 'flex',
+                        'flexDirection': 'column',
+                        'alignItems': 'center',
+                        'justifyContent': 'center',
+                        'height': '100%'
+                    }),
+                    style={
+                        'width': '100%',
+                        'height': '200px',
+                        'borderWidth': '3px',
+                        'borderStyle': 'dashed',
+                        'borderRadius': '12px',
+                        'borderColor': '#5c6bc0',
+                        'textAlign': 'center',
+                        'background': 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+                        'cursor': 'pointer',
+                        'transition': 'all 0.3s ease'
+                    },
+                    multiple=False
+                ),
+                html.Div(id='upload-status', style={'marginTop': '20px'}),
 
-    # Native Dash tabs
-    html.Div([
-        dcc.Tabs(id='tabs', value='executive', children=[
-            dcc.Tab(label='📊 Executive Summary', value='executive', style={'padding': '10px'}, selected_style={'padding': '10px', 'fontWeight': 'bold'}),
-            dcc.Tab(label='📈 Overall Performance', value='performance', style={'padding': '10px'}, selected_style={'padding': '10px', 'fontWeight': 'bold'}),
-            dcc.Tab(label='💰 Paid Search', value='paid-search', style={'padding': '10px'}, selected_style={'padding': '10px', 'fontWeight': 'bold'}),
-            dcc.Tab(label='🔍 SEO', value='seo', style={'padding': '10px'}, selected_style={'padding': '10px', 'fontWeight': 'bold'}),
-            dcc.Tab(label='🎯 Tactics Matrix', value='tactics', style={'padding': '10px'}, selected_style={'padding': '10px', 'fontWeight': 'bold'}),
-        ], style={'marginBottom': '20px'}),
-        html.Div(id='tab-content', style={'padding': '20px'})
-    ], id='dashboard-section', style={'display': 'none'}),
+                # Business goals selection
+                html.Div([
+                    html.Label("Select Business Goals:", style={
+                        'fontWeight': '600',
+                        'marginTop': '30px',
+                        'marginBottom': '15px',
+                        'color': '#2c3e50',
+                        'fontSize': '16px'
+                    }),
+                    dcc.Checklist(
+                        id='business-goals',
+                        options=[
+                            {'label': ' Increase Traffic (Acquisition)', 'value': 'acquisition'},
+                            {'label': ' Improve Conversions', 'value': 'conversion'},
+                            {'label': ' Boost Customer Lifetime Value', 'value': 'ltv'},
+                            {'label': ' Enhance User Experience', 'value': 'user_experience'},
+                            {'label': ' Reduce Bounce Rate', 'value': 'engagement'},
+                            {'label': ' Improve SEO Rankings', 'value': 'seo'}
+                        ],
+                        value=['acquisition', 'conversion'],
+                        style={'marginBottom': '20px'},
+                        labelStyle={
+                            'display': 'block',
+                            'marginBottom': '12px',
+                            'fontSize': '15px',
+                            'color': '#34495e',
+                            'fontWeight': '500'
+                        }
+                    )
+                ], id='goals-section', style={'display': 'none', 'marginTop': '15px'})
+            ], style={
+                'maxWidth': '700px',
+                'margin': '0 auto',
+                'padding': '40px',
+                'background': 'white',
+                'borderRadius': '15px',
+                'boxShadow': '0 2px 10px rgba(0,0,0,0.08)'
+            })
+        ], id='upload-section', style={
+            'padding': '40px',
+            'minHeight': 'calc(100vh - 60px)',
+            'display': 'flex',
+            'alignItems': 'center',
+            'justifyContent': 'center'
+        }),
+
+        # Dashboard content (shown after upload)
+        html.Div([
+            html.Div(id='page-content', style={'padding': '30px'})
+        ], id='dashboard-section', style={'display': 'none', 'minHeight': 'calc(100vh - 60px)'})
+
+    ], id='main-content', style={
+        'marginLeft': '220px',
+        'marginTop': '60px',
+        'background': '#fafafa',
+        'minHeight': 'calc(100vh - 60px)'
+    }),
 
     # Footer
     html.Div([
-        html.P('Powered by AUX Insights | Marketing Intelligence Dashboard',
-               style={'textAlign': 'center', 'color': '#95a5a6', 'fontSize': '14px'})
-    ], style={'padding': '20px', 'marginTop': '40px', 'background': '#2c3e50'})
-], style={'fontFamily': "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto", 'background': '#f8f9fa', 'minHeight': '100vh'})
+        html.Div([
+            html.Span('Powered by ', style={'color': '#95a5a6', 'fontSize': '13px'}),
+            html.Span('AUX Insights', style={'color': '#5c6bc0', 'fontWeight': '600', 'fontSize': '13px'}),
+            html.Span(' | Marketing Intelligence Dashboard', style={'color': '#95a5a6', 'fontSize': '13px'})
+        ], style={'textAlign': 'center', 'padding': '20px'})
+    ], style={
+        'marginLeft': '220px',
+        'background': '#2c3e50',
+        'borderTop': '1px solid #34495e'
+    })
+], style={
+    'fontFamily': "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+    'background': '#fafafa'
+})
+
+# Sidebar and header dynamic callbacks
+@app.callback(
+    [Output('sidebar-container', 'children'),
+     Output('header-container', 'children')],
+    [Input('url', 'pathname'),
+     Input('data-store', 'data')]
+)
+def update_navigation(pathname, data):
+    """Update sidebar and header based on current page and data status."""
+    is_complete = data is not None
+    sidebar = create_sidebar_nav(current_page=pathname or '/')
+    header = create_top_header(
+        report_title='Marketing Insights',
+        client_name='Dossier',
+        is_complete=is_complete
+    )
+    return sidebar, header
 
 # Upload callback
 @app.callback(
@@ -109,17 +187,15 @@ app.layout = html.Div([
      Output('upload-status', 'children'),
      Output('upload-section', 'style'),
      Output('dashboard-section', 'style'),
-     Output('data-status-indicator', 'children'),
-     Output('data-status-indicator', 'style'),
      Output('goals-section', 'style')],
     [Input('upload-data', 'contents')],
     [State('upload-data', 'filename')]
 )
 def upload_file(contents, filename):
     if contents is None:
-        return (None, "", {'padding': '20px'}, {'display': 'none'},
-                [html.I(className='fas fa-exclamation-circle', style={'marginRight': '8px'}), 'No Data'],
-                {'padding': '10px 20px', 'background': 'rgba(255,255,255,0.2)', 'borderRadius': '8px', 'color': '#ffffff', 'display': 'flex', 'alignItems': 'center'},
+        return (None, "",
+                {'padding': '40px', 'minHeight': 'calc(100vh - 60px)', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'},
+                {'display': 'none'},
                 {'display': 'none'})
 
     try:
@@ -134,10 +210,9 @@ def upload_file(contents, filename):
 
         is_valid, error_msg, warnings = DataValidator.validate_excel_structure(excel_file)
         if not is_valid:
-            return (None, html.Div(f"❌ Error: {error_msg}", style={'color': '#e74c3c'}),
-                    {'padding': '20px'}, {'display': 'none'},
-                    [html.I(className='fas fa-times-circle', style={'marginRight': '8px'}), 'Error'],
-                    {'padding': '10px 20px', 'background': 'rgba(231,76,60,0.2)', 'borderRadius': '8px', 'color': '#ffffff', 'display': 'flex', 'alignItems': 'center'},
+            return (None, html.Div(f"❌ Error: {error_msg}", style={'color': '#e74c3c', 'fontWeight': '600'}),
+                    {'padding': '40px', 'minHeight': 'calc(100vh - 60px)', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'},
+                    {'display': 'none'},
                     {'display': 'none'})
 
         excel_file.seek(0)
@@ -155,31 +230,32 @@ def upload_file(contents, filename):
                 serializable_data[key] = value
 
         success_msg = html.Div([
-            html.I(className='fas fa-check-circle', style={'marginRight': '10px', 'color': '#27ae60'}),
+            html.I(className='fas fa-check-circle', style={'marginRight': '10px', 'color': '#27ae60', 'fontSize': '20px'}),
             f"✓ Successfully loaded: {filename}"
-        ], style={'color': '#27ae60', 'fontWeight': 'bold'})
+        ], style={'color': '#27ae60', 'fontWeight': 'bold', 'fontSize': '16px'})
 
-        return (serializable_data, success_msg, {'display': 'none'}, {'display': 'block'},
-                [html.I(className='fas fa-check-circle', style={'marginRight': '8px'}), 'Data Loaded'],
-                {'padding': '10px 20px', 'background': 'rgba(46,204,113,0.3)', 'borderRadius': '8px', 'color': '#ffffff', 'display': 'flex', 'alignItems': 'center'},
-                {'display': 'block', 'marginTop': '10px'})
+        return (serializable_data, success_msg,
+                {'display': 'none'},
+                {'display': 'block', 'minHeight': 'calc(100vh - 60px)'},
+                {'display': 'block', 'marginTop': '15px'})
 
     except Exception as e:
-        return (None, html.Div(f"❌ Error: {str(e)}", style={'color': '#e74c3c'}),
-                {'padding': '20px'}, {'display': 'none'},
-                [html.I(className='fas fa-exclamation-triangle', style={'marginRight': '8px'}), 'Error'],
-                {'padding': '10px 20px', 'background': 'rgba(231,76,60,0.2)', 'borderRadius': '8px', 'color': '#ffffff', 'display': 'flex', 'alignItems': 'center'},
+        return (None, html.Div(f"❌ Error: {str(e)}", style={'color': '#e74c3c', 'fontWeight': '600'}),
+                {'padding': '40px', 'minHeight': 'calc(100vh - 60px)', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'},
+                {'display': 'none'},
                 {'display': 'none'})
 
-# Tab content callback
+# Page content callback (navigation routing)
 @app.callback(
-    Output('tab-content', 'children'),
-    [Input('tabs', 'value'),
+    Output('page-content', 'children'),
+    [Input('url', 'pathname'),
      Input('data-store', 'data')]
 )
-def render_tab_content(active_tab, data):
+def display_page(pathname, data):
+    """Route to different pages based on URL pathname."""
     from layouts import executive_summary, overall_performance, tactics_matrix
     from callbacks.navigation import create_paid_search_page, create_seo_page
+    from components.keyword_insights_pro import create_keywords_page_layout
 
     # Convert data back to DataFrames
     processed_data = None
@@ -194,20 +270,37 @@ def render_tab_content(active_tab, data):
             else:
                 processed_data[key] = value
 
-    if active_tab == 'executive':
+    # Route to appropriate page
+    if pathname == '/' or pathname is None:
         channel_data = processed_data.get('executive_summary') if processed_data else None
         return executive_summary.create_layout(channel_data)
-    elif active_tab == 'performance':
+
+    elif pathname == '/performance':
         return overall_performance.create_layout(processed_data)
-    elif active_tab == 'paid-search':
-        return create_paid_search_page(processed_data)
-    elif active_tab == 'seo':
-        return create_seo_page(processed_data)
-    elif active_tab == 'tactics':
+
+    elif pathname == '/tactics':
         tactics_df = processed_data.get('tactics') if processed_data else None
         return tactics_matrix.create_layout(tactics_df)
+
+    elif pathname == '/paid-search':
+        return create_paid_search_page(processed_data)
+
+    elif pathname == '/seo':
+        return create_seo_page(processed_data)
+
+    elif pathname == '/keywords-organic':
+        keywords_df = processed_data.get('keywords_organic') if processed_data else None
+        return create_keywords_page_layout(keywords_df, keyword_type='Organic', primary_company='dossier.co')
+
+    elif pathname == '/keywords-paid':
+        keywords_df = processed_data.get('keywords_paid') if processed_data else None
+        return create_keywords_page_layout(keywords_df, keyword_type='Paid', primary_company='dossier.co')
+
     else:
-        return html.Div("Select a tab to view content")
+        return html.Div([
+            html.H2("404: Page Not Found", style={'color': '#e74c3c', 'textAlign': 'center', 'marginTop': '50px'}),
+            html.P("The page you're looking for doesn't exist.", style={'textAlign': 'center', 'color': '#95a5a6'})
+        ])
 
 # Register recommendations callbacks
 from callbacks.recommendations import register_recommendations_callbacks
@@ -221,7 +314,7 @@ if __name__ == '__main__':
     print("""
     ╔══════════════════════════════════════════════════════════╗
     ║                                                          ║
-    ║  🚀 Marketing Insights Dashboard (Simplified)           ║
+    ║  🚀 Marketing Insights Dashboard (VortexMini Style)     ║
     ║                                                          ║
     ║  📊 Dashboard URL: http://localhost:8050                ║
     ║                                                          ║

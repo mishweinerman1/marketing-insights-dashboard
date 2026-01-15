@@ -58,7 +58,7 @@ def create_traffic_scale_scatter(df, company_focus='dossier'):
     fig.add_vline(x=mid_visits, line_dash="solid", line_color="rgba(44,62,80,0.4)", line_width=2)
 
     # Add scatter points with better styling
-    colors = ['#667eea' if c.lower() == company_focus.lower() else '#7f8c8d' for c in companies]
+    colors = ['#5c6bc0' if c.lower() == company_focus.lower() else '#7f8c8d' for c in companies]
     sizes = [20 if c.lower() == company_focus.lower() else 14 for c in companies]
 
     fig.add_trace(go.Scatter(
@@ -183,7 +183,7 @@ def create_traffic_sources_chart(df):
 
     # Better color scheme with distinct, professional colors
     colors = {
-        'Direct': '#667eea',
+        'Direct': '#5c6bc0',
         'Organic Search': '#2ecc71',
         'Paid Search': '#f39c12',
         'Social': '#e74c3c',
@@ -298,7 +298,7 @@ def create_engagement_scatter(df):
     fig.add_vline(x=median_bounce, line_dash="solid", line_color="rgba(44,62,80,0.4)", line_width=2)
 
     # Determine if each company is the focus (Dossier)
-    colors = ['#667eea' if c == 'Dossier' else '#7f8c8d' for c in companies]
+    colors = ['#5c6bc0' if c == 'Dossier' else '#7f8c8d' for c in companies]
     sizes = [16 if c == 'Dossier' else 12 for c in companies]
 
     fig.add_trace(go.Scatter(
@@ -413,7 +413,7 @@ def create_web_vitals_chart(df):
     df = pd.DataFrame(data)
 
     metrics = ['Performance', 'SEO', 'Accessibility', 'Best Practices']
-    colors = ['#667eea', '#2ecc71', '#f39c12', '#3498db']
+    colors = ['#5c6bc0', '#2ecc71', '#f39c12', '#3498db']
 
     fig = go.Figure()
 
@@ -508,7 +508,7 @@ def create_ppc_spend_trend(df):
                 name='Mobile',
                 mode='lines',
                 line=dict(
-                    color='#667eea',
+                    color='#5c6bc0',
                     width=2.5,
                     shape='spline',
                     smoothing=1.3
@@ -608,7 +608,7 @@ def create_tactics_matrix_scatter(df):
 
     # Color mapping by funnel stage
     color_map = {
-        'Conversion': '#667eea',
+        'Conversion': '#5c6bc0',
         'Acquisition': '#2ecc71',
         'LTV': '#f39c12',
         'User Experience': '#e74c3c'
@@ -869,7 +869,7 @@ def create_donut_chart(data, title="Revenue by Channel"):
     """
     labels = list(data.keys())
     values = list(data.values())
-    colors = ['#667eea', '#f39c12', '#2ecc71', '#e74c3c']
+    colors = ['#5c6bc0', '#f39c12', '#2ecc71', '#e74c3c']
 
     fig = go.Figure(data=[go.Pie(
         labels=labels,

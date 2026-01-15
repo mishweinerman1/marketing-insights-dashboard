@@ -5,7 +5,7 @@ Insight cards component for displaying key findings and recommendations.
 from dash import html
 
 
-def create_insight_card(title, insights, icon='fa-lightbulb', color='#667eea'):
+def create_insight_card(title, insights, icon='fa-lightbulb', color='#5c6bc0'):
     """
     Creates an insight card with title and bullet points.
 
@@ -117,7 +117,7 @@ def create_metric_card(label, value, change=None, icon='fa-chart-line', good_dir
         ], style={
             'marginBottom': '16px',
             'padding': '20px',
-            'background': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'background': 'linear-gradient(135deg, #5c6bc0 0%, #764ba2 100%)',
             'borderRadius': '50%',
             'width': '70px',
             'height': '70px',
@@ -285,7 +285,7 @@ def create_keyword_insight_card(keywords_df):
                 html.Div([
                     html.Span(f"{idx+1}.", style={
                         'fontWeight': '700',
-                        'color': '#667eea',
+                        'color': '#5c6bc0',
                         'marginRight': '8px',
                         'fontSize': '14px'
                     }),
@@ -297,7 +297,7 @@ def create_keyword_insight_card(keywords_df):
                     html.Span(kw['clicks'], style={
                         'fontSize': '13px',
                         'fontWeight': '600',
-                        'color': '#667eea'
+                        'color': '#5c6bc0'
                     })
                 ], style={
                     'display': 'flex',
