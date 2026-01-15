@@ -213,6 +213,10 @@ def render_tab_content(active_tab, data):
 from callbacks.recommendations import register_recommendations_callbacks
 register_recommendations_callbacks(app)
 
+# Register competitive intelligence callbacks
+from callbacks.competitive_intel import register_competitive_intel_callbacks
+register_competitive_intel_callbacks(app)
+
 if __name__ == '__main__':
     print("""
     ╔══════════════════════════════════════════════════════════╗

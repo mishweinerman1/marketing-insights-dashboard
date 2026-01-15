@@ -114,6 +114,9 @@ def create_layout(tactics_data=None):
         # AI Recommendations Panel
         html.Div(id='recommendations-panel', style={'padding': '0 40px'}),
 
+        # Competitive Intelligence Panel
+        html.Div(id='competitive-intel-panel', style={'padding': '0 40px'}),
+
         # Tactics table
         html.Div([
             html.H2("All Marketing Tactics", style={
