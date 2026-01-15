@@ -500,15 +500,20 @@ def create_ppc_spend_trend(df):
     fig = go.Figure()
 
     try:
-        # Create smooth stacked area chart with spline
+        # Create smooth stacked area chart with spline interpolation
         if 'Mobile Spend' in df.columns:
             fig.add_trace(go.Scatter(
                 x=df['YearMonth'] if 'YearMonth' in df.columns else df.index,
                 y=df['Mobile Spend'],
                 name='Mobile',
                 mode='lines',
-                line=dict(color='#667eea', width=2, shape='spline', smoothing=1.3),
-                fillcolor='rgba(102, 126, 234, 0.5)',
+                line=dict(
+                    color='#667eea',
+                    width=2.5,
+                    shape='spline',
+                    smoothing=1.3
+                ),
+                fillcolor='rgba(102, 126, 234, 0.4)',
                 fill='tozeroy',
                 stackgroup='one',
                 hovertemplate='<b>Mobile</b><br>$%{y:,.0f}<extra></extra>'
@@ -520,8 +525,13 @@ def create_ppc_spend_trend(df):
                 y=df['Desktop Spend'],
                 name='Desktop',
                 mode='lines',
-                line=dict(color='#f39c12', width=2, shape='spline', smoothing=1.3),
-                fillcolor='rgba(243, 156, 18, 0.5)',
+                line=dict(
+                    color='#f39c12',
+                    width=2.5,
+                    shape='spline',
+                    smoothing=1.3
+                ),
+                fillcolor='rgba(243, 156, 18, 0.4)',
                 fill='tonexty',
                 stackgroup='one',
                 hovertemplate='<b>Desktop</b><br>$%{y:,.0f}<extra></extra>'
